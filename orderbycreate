@@ -1,0 +1,261 @@
+ String selectPK(String select1Tname1){  
+		String selectPK1 = "SELECT column_name FROM all_cons_columns WHERE constraint_name = (SELECT constraint_name FROM all_constraints WHERE UPPER(table_name) = UPPER('"+select1Tname1+"') AND CONSTRAINT_TYPE ='P')";
+	    ResultSet rs = null;
+			 try{
+				 rs = st.executeQuery(selectPK1);
+    		     while(rs.next()){
+				 getCulName1 = rs.getString("COLUMN_NAME");
+				 }
+			 }catch(SQLException se){
+				JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+				se.printStackTrace();
+			 }finally{
+			 try{	
+				rs.close();
+			 }catch(SQLException se){}
+			 }return getCulName1;
+	}
+/*	
+	String selectOrderBy(String startname2){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String CCtname = tCombo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+ startname2;
+		ResultSet rs = null;
+		String OrderByColumnName = null;
+		int culCount1 = 0;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+		    int culCount2 = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+				   	if(cn == culSelect){
+						OrderByColumnName =cn;
+					}
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			try{	
+				rs.close();
+			}catch(SQLException se){}
+		}return OrderByColumnName;      	
+	}
+*/
+	void OrderBytableData(String startname){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+startname+" order by "+culSelect+"";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+			 }catch(SQLException se){}
+		}	
+	}
+
+	void OrderBytableDataDESC(String startname){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+startname+" order by "+culSelect+" DESC";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+			 }catch(SQLException se){}
+		}	
+	}
+	
+	
+	void OrderBytableDataDESCField2(String startname , String sele){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+startname+" where "+dataTypeSelect(startname,culSelect)+" like '%"+sele+"%' order by "+culSelect+" DESC";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+			 }catch(SQLException se){}
+		}	
+	}
+	
+	void viewOrderBytableDataField2(String sele){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+ viewN +" where "+ culSelect +" like '%"+sele+"%' order by "+culSelect;
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+				pln("1");
+			 }catch(SQLException se){}
+		}pln(""+getTableSQL);	
+	}
+
+
+	void viewOrderBytableDataDESCField2(String sele){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+ viewN +" where "+ culSelect +" like '%"+sele+"%' order by "+culSelect+" DESC";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+				pln("1");
+			 }catch(SQLException se){}
+		}pln(""+getTableSQL);	
+	}
+
+		/*
+			
+	void viewfieldSelect(String sele){ 
+		String cul2 = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+viewN+" where "+cul2+" like '%"+sele+"%'";
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+				String cn = rsmd.getColumnName(i);
+				vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			se.printStackTrace();
+		} finally{
+			  try{	 
+			rs.close();
+		 }catch(SQLException se){}
+		}
+	}
+		*/
+
+
+	void OrderBytableDataField2(String startname , String sele){
+		String culSelect = t1Combo.getSelectedItem().toString();
+		String getTableSQL ="select * from "+startname+" where "+dataTypeSelect(startname,culSelect)+" like '%"+sele+"%' order by "+culSelect;
+		ResultSet rs = null;
+		try{
+			rs = st.executeQuery(getTableSQL);
+			ResultSetMetaData rsmd = rs.getMetaData();
+			    culCount = rsmd.getColumnCount();
+				for(int i=1; i<=culCount;i++){
+					String cn = rsmd.getColumnName(i);
+					vecCulName.add(cn);
+				}
+				while(rs.next()){
+				     v1 = new Vector<String>();
+					 for(int i=1; i<=culCount; i++){
+						Metadata = rs.getString(i); 
+						v1.add(Metadata);
+					}
+					tableMetaData.add(v1);
+				}
+		}catch(SQLException se){
+			JOptionPane.showMessageDialog(null, " ※ 예외사항 SQLException : "+se+" ", "기본 키 또는 값 불명", JOptionPane.OK_OPTION);
+			se.printStackTrace();
+		}finally{
+			 try{	
+				rs.close();
+			 }catch(SQLException se){}
+		}	
+	}
